@@ -157,7 +157,7 @@ SpinnakerCameraNode::create_publishers(
     publishers[i].set_publisher(
       std::make_shared<image_transport::CameraPublisher>(
         image_transport::create_camera_publisher(
-          node, m_settings.at(i).get_camera_name() + "/image_raw", rmw_qos_profile_default)));
+          node, m_settings.at(i).get_camera_name() + "/image_raw", rclcpp::QoS(10).lifespan(std::chrono::milliseconds(100)).get_rmw_qos_profile())));
     const auto camera_info_manager = std::make_shared<camera_info_manager::CameraInfoManager>(
       node, m_settings.at(i).get_camera_name());
     camera_info_manager->loadCameraInfo(m_settings.at(i).get_camera_info_url());
