@@ -174,6 +174,7 @@ void SpinnakerCameraNode::publish_image(
   const auto publisher_index = m_use_publisher_per_camera ? camera_index : 0UL;
   if (image) {
     if (!m_use_camera_timestamp) {image->header.stamp = this->now();}
+    RCLCPP_INFO(this->get_logger(), "publish image");
     m_publishers.at(publisher_index).publish(std::move(image));
   }
 }
@@ -198,6 +199,7 @@ void SpinnakerCameraNode::ProtectedPublisher::publish(
       std::unique_ptr<sensor_msgs::msg::CameraInfo> camera_info(
         new sensor_msgs::msg::CameraInfo(m_camera_info_manager->getCameraInfo()));
       camera_info->header = image->header;
+      RCLCPP_INFO(this->get_logger(), "publish camera_info");
       m_publisher->publish(std::move(image), std::move(camera_info));
     }
   } else {
