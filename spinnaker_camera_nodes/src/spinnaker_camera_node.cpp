@@ -199,7 +199,6 @@ void SpinnakerCameraNode::ProtectedPublisher::publish(
       std::unique_ptr<sensor_msgs::msg::CameraInfo> camera_info(
         new sensor_msgs::msg::CameraInfo(m_camera_info_manager->getCameraInfo()));
       camera_info->header = image->header;
-      RCLCPP_INFO(this->get_logger(), "publish camera_info");
       m_publisher->publish(std::move(image), std::move(camera_info));
     }
   } else {
